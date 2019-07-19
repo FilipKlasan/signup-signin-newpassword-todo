@@ -1,0 +1,22 @@
+<mat-card style="text-align: center; width: 300px; margin: auto; margin-top: 100px;">
+     <mat-toolbar style="background-color: rgb(103, 65, 202); color: white">
+         <h2 style="margin-left: 15px;">Log in</h2>
+     </mat-toolbar><br><br>
+     <form #formVal="ngForm">
+        <mat-form-field>
+            <input placeholder="Email or username" matInput #emailOrUsernameVal="ngModel" required name="emailOrUsernameF" [(ngModel)]="emailOrUsername">
+            <mat-hint *ngIf="emailOrUsernameVal.touched && emailOrUsernameVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+          <br><br>
+        <mat-form-field>
+            <input type="password" placeholder="Password" matInput #passwVal="ngModel" required name="passwordF" [pattern]="patternPassword" [(ngModel)]="password">
+            <mat-hint *ngIf="passwVal.touched && passwVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field> 
+          <br><br>
+        <button [disabled]="formVal.invalid" mat-raised-button (click)="logIn()" style="background-color: rgb(103, 65, 202); color: white;"> Log in </button>
+     </form><br><br>
+      <div *ngIf="!validationBool" class="error"> <mat-icon>error</mat-icon>{{validationString}}</div><br><br>
+      <a routerLink="/forgottenPassword" style="text-decoration: none;"><h5 style="color: rgb(103, 65, 202);">Forgot password?</h5></a>
+</mat-card>
+
+<router-outlet></router-outlet>

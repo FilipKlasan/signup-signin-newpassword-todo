@@ -1,0 +1,17 @@
+<div class="container">
+<div class="row mt-5">
+    <div class="col-md-3 mb-3" *ngFor="let i of ticketArray">
+        <div class="card text-center">
+            <div class="card-body">
+               <h5 class="card-title">{{i.title}}</h5>
+               <p> {{i.text}}</p>
+               <a href="#" class="btn btn-primary" style="background-color: rgb(68, 206, 116);border-color: rgb(68, 206, 116); color: white;">{{i.text1}}</a>
+            </div>
+            <div class="card-footer text-muted">
+               {{i.text2}}
+            </div>
+        </div>
+    </div>
+ </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,12 @@
+<div style="text-align: center;">
+    <mat-toolbar style="background-color: greenyellow; color:white;"><h3>Edit</h3></mat-toolbar><br><br>
+<form #formVal="ngForm">
+    <mat-form-field>
+        <input matInput required placeholder="Todo" #todoVal="ngModel" name="todoF" [(ngModel)]="dialogData.todo">
+        <mat-hint *ngIf="todoVal.touched && todoVal.invalid" style="color:red;">Required field!</mat-hint>
+    </mat-form-field>
+     <br><br>
+  <button style="margin-right: 35px;" (click)="close()" color="warn" mat-raised-button><mat-icon>close</mat-icon></button>
+  <button style="background-color:greenyellow; color: white;" [disabled]="formVal.invalid" mat-raised-button [mat-dialog-close]="dialogData"><mat-icon>done</mat-icon></button>
+</form>
+</div>

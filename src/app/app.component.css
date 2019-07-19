@@ -1,0 +1,9 @@
+nav{
+    min-height: 130px;
+}
+.navbar-expand-lg{
+    background-color: rgb(45, 50, 59);
+}
+.nav-link{
+    font-size: 17px;
+}

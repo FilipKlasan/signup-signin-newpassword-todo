@@ -1,0 +1,15 @@
+<div style="margin: auto; text-align: center"> 
+    <div style="background-color: rgb(63, 81, 181); color: white;">
+        <h3 style="padding: 20px;">
+            Check your email,<br>and type in below<br>verification code!
+        </h3>
+    </div><br><br>
+    <form #formVal="ngForm">
+        <mat-form-field>
+            <input matInput required placeholder="Enter code" #codeVal="ngModel" name="codeF" [(ngModel)]="dialogData.code">
+            <mat-hint *ngIf="codeVal.touched && codeVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+    </form><br><br>
+    <button color="primary" [disabled]="formVal.invalid" mat-raised-button [mat-dialog-close]="dialogData.code">Submit</button>
+</div>
+    

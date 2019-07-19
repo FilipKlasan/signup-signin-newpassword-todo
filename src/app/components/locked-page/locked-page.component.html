@@ -1,0 +1,43 @@
+<mat-form-field style="margin-left: 8px;">
+  <textarea (keyup)="sessStorage()" matInput placeholder="Todo" [(ngModel)]="todo"></textarea>
+</mat-form-field>
+  <button mat-raised-button (click)="insertTodo()" style="margin-left: 30px; background-color: rgb(103, 65, 202); color: white; border-color: rgb(103, 65, 202);">submit</button>
+<br><br>
+
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"  style="background-color:rgb(58, 58, 58);"> 
+
+        <ng-container matColumnDef="id">
+           <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+           <mat-cell *matCellDef="let element"> <span class="mobile-label">ID:</span> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="todo">
+           <mat-header-cell *matHeaderCellDef> todo </mat-header-cell>
+           <mat-cell *matCellDef="let element"> <span class="mobile-label">todo:</span> {{element.todo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+           <mat-header-cell *matHeaderCellDef> edit </mat-header-cell>
+           <mat-cell *matCellDef="let element; let i = index;">
+              <span class="mobile-label">edit</span>
+              <button mat-icon-button style="color: greenyellow;" (click)="edit(i)"><mat-icon>edit</mat-icon></button> 
+           </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+           <mat-header-cell *matHeaderCellDef> delete </mat-header-cell>
+           <mat-cell *matCellDef="let element; let i = index;">
+              <span class="mobile-label">delete</span> 
+              <button mat-icon-button color="warn" (click)="delete(i)"><mat-icon>delete</mat-icon></button>
+           </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnNames"></mat-row>
+
+     </mat-table>
+</div><br><br>
+
+
+<router-outlet></router-outlet>

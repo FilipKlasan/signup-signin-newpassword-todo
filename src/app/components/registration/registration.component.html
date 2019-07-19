@@ -1,0 +1,35 @@
+<mat-card style="text-align: center; width: 300px; margin: auto; margin-top: 100px;">
+    <mat-toolbar style="background-color: rgb(103, 65, 202); color: white"><h2 style="margin-left: 15px;">Register</h2></mat-toolbar><br><br>
+    <form #formVal="ngForm">
+        <mat-form-field>
+           <input type="email" placeholder="Email" matInput #emailVal="ngModel" required name="emailF" [(ngModel)]="email" email>
+           <mat-hint *ngIf="emailVal.touched && emailVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field>
+            <input placeholder="Username" matInput #usernameVal="ngModel" required name="usernameF" [(ngModel)]="username">
+            <mat-hint *ngIf="usernameVal.touched && usernameVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field>
+            <input type="password" placeholder="Password" matInput #passwVal="ngModel" required name="passwordF" [pattern]="patternPassword" [(ngModel)]="password">
+            <mat-hint *ngIf="passwVal.touched && passwVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field>
+            <input type="password" placeholder="Repeat password" matInput #passwRepeatVal="ngModel" required name="passwordRepeatF" [pattern]="patternPassword" [(ngModel)]="passwordRepeat">
+            <mat-hint *ngIf="passwRepeatVal.touched && passwRepeatVal.invalid" style="color:red;">Required field!</mat-hint>
+        </mat-form-field>
+        <br>
+        <br>
+        <button [disabled]="formVal.invalid || disableButton == true" mat-raised-button (click)="register()" style="background-color: rgb(103, 65, 202); color: white;"> Register </button>
+    </form>
+    <br>
+    <br>
+    <div *ngIf="!validationBool" class="error"><mat-icon>error</mat-icon>{{validationString}}</div>
+</mat-card>
+
+<router-outlet></router-outlet> 
