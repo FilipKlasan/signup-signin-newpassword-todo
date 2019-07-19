@@ -30,6 +30,7 @@ export class RegistrationComponent {
   password: string;
   passwordRepeat: string;
   registerUser: user;
+  patternUsername: string = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$';
   patternPassword: string = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$';
   validationString: string;
   validationBool: boolean = true;

@@ -8,13 +8,25 @@
         <br>
         <br>
         <mat-form-field>
-            <input placeholder="Username" matInput #usernameVal="ngModel" required name="usernameF" [(ngModel)]="username">
+            <input 
+             matTooltip="Username must be between 8 and 16 characters; 
+             must contain at least one lowercase letter, 
+             one uppercase letter, one numeric digit, and one special character, 
+             but cannot contain whitespace"
+             placeholder="Username" matInput #usernameVal="ngModel" required 
+             name="usernameF" [(ngModel)]="username" [pattern]="patternUsername">
             <mat-hint *ngIf="usernameVal.touched && usernameVal.invalid" style="color:red;">Required field!</mat-hint>
         </mat-form-field>
         <br>
         <br>
         <mat-form-field>
-            <input type="password" placeholder="Password" matInput #passwVal="ngModel" required name="passwordF" [pattern]="patternPassword" [(ngModel)]="password">
+            <input
+             matTooltip="Password must be between 8 and 16 characters; 
+             must contain at least one lowercase letter, 
+             one uppercase letter, one numeric digit, and one special character, 
+             but cannot contain whitespace"
+             type="password" placeholder="Password" matInput #passwVal="ngModel" 
+             required name="passwordF" [pattern]="patternPassword" [(ngModel)]="password">
             <mat-hint *ngIf="passwVal.touched && passwVal.invalid" style="color:red;">Required field!</mat-hint>
         </mat-form-field>
         <br>
