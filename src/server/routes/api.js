@@ -169,8 +169,8 @@ router.post('/inserttodo', verifyToken, (req, res) => {
             user.todoList.push(userData.todo);
             user.save()
             .then(user => {
-                console.log('Todo successfully saved');
-                res.send({statusObj: 'Todo successfully saved'});
+                console.log('Todo has been saved');
+                res.send({statusObj: 'Todo has been saved'});
             })
             .catch(err => {
                 console.log('Error: ' + err);
@@ -189,11 +189,11 @@ router.put('/edittodo', verifyToken, (req, res) => {
     let userData = req.body;
     User.findOne({email: userData.email})
         .then(user => {
-            user.todoList[userData.todoID] = userData.todo;
+            user.todoList = userData.todoList;
             user.save()
                 .then(user => {
-                    console.log('Todo successfully edited');
-                    res.send({statusObj: 'Todo successfully edited'});
+                    console.log('Todo has been edited');
+                    res.send({statusObj: 'Todo has been edited'});
                 })
                 .catch(err => {
                      console.log('Error: ' + err);
@@ -207,7 +207,7 @@ router.put('/edittodo', verifyToken, (req, res) => {
 });
 
 
-router.get('/getalltodos', verifyToken, (req, res) => {
+router.post('/getalltodos', verifyToken, (req, res) => {
     let userData = req.body;
     User.findOne({email: userData.email})
         .then(user => {
@@ -224,7 +224,7 @@ router.get('/getalltodos', verifyToken, (req, res) => {
                     id: index + 1,
                     todo: todo
                 }
-                obj.todoList[index] = tempObj;
+                obj.todoList.push(tempObj);
                 index++;
              });
              res.send({obj});
@@ -237,25 +237,25 @@ router.get('/getalltodos', verifyToken, (req, res) => {
 });
 
 
-router.delete('/deletetodo', verifyToken, (req, res) => {
+router.post('/deletetodo', verifyToken, (req, res) => {
     let userData = req.body;
     User.findOne({email: userData.email})
-   .then(user => {
-       user.todoList.splice(userData.todoID, 1);
-       user.save()
-           .then(user => {
-               console.log('Todo successfully deleted');
-               res.send({statusObj: 'Todo successfully deleted'});
-           })
-           .catch(err => {
-               console.log('Error: ' + err);
-               res.status(401).status('Error occurred');
-           });  
-   })
-   .catch(err => {
-       console.log('Error: ' + err);
-       res.status(401).send('Error occurred');
-   });
+        .then(user => {
+            user.todoList = userData.todoList;
+            user.save()
+                .then(user => {
+                    console.log('Todo has been deleted');
+                    res.send({statusObj: 'Todo has been deleted'});
+                })
+                .catch(err => {
+                     console.log('Error: ' + err);
+                     res.status(401).status('Error occurred');
+                });  
+        })
+        .catch(err => {
+            console.log('Error: ' + err);
+            res.status(401).send('Error occurred');
+        });
 });
 
 

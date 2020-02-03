@@ -40,7 +40,7 @@ export class LogInComponent {
             }
             else{ 
               localStorage.setItem('fzx', res.obj.token);
-              this.authService.setEmail(res.obj.userEmail);
+              localStorage.setItem('email', res.obj.userEmail);
               this.router.navigate(['/lockedPage']);
             }
       }, 

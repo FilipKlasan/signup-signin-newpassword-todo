@@ -6,7 +6,7 @@
         <mat-hint *ngIf="todoVal.touched && todoVal.invalid" style="color:red;">Required field!</mat-hint>
     </mat-form-field>
      <br><br>
-  <button style="margin-right: 35px;" (click)="close()" color="warn" mat-raised-button><mat-icon>close</mat-icon></button>
-  <button style="background-color:greenyellow; color: white;" [disabled]="formVal.invalid" mat-raised-button [mat-dialog-close]="dialogData"><mat-icon>done</mat-icon></button>
+  <button style="margin-right: 35px; outline: none;" (click)="close()" color="warn" mat-raised-button><mat-icon>close</mat-icon></button>
+  <button style="background-color:greenyellow; color: white; outline: none;" [disabled]="formVal.invalid" mat-raised-button [mat-dialog-close]="dialogData"><mat-icon>done</mat-icon></button>
 </form>
 </div>

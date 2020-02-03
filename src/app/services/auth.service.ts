@@ -12,7 +12,6 @@ import { throwError } from 'rxjs'
 })
 export class AuthService {
 
-  email: string;
 
   constructor(private http: HttpClient, private router: Router) { }
    
@@ -32,7 +31,7 @@ export class AuthService {
 
   logOut(){
     localStorage.removeItem('fzx');
-    sessionStorage.clear();
+    localStorage.removeItem('email');
     this.router.navigate(['/home']);
   }
   
@@ -57,14 +56,6 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('fzx');
-  }
-
-  setEmail(email){
-    this.email = email;
-  }
-  
-  getEmail(): string{
-    return this.email;
   }
 
 }

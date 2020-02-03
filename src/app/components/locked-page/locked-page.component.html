@@ -1,7 +1,7 @@
 <mat-form-field style="margin-left: 8px;">
-  <textarea (keyup)="sessStorage()" matInput placeholder="Todo" [(ngModel)]="todo"></textarea>
+  <textarea matInput placeholder="Todo" [(ngModel)]="todo"></textarea>
 </mat-form-field>
-  <button mat-raised-button (click)="insertTodo()" style="margin-left: 30px; background-color: rgb(103, 65, 202); color: white; border-color: rgb(103, 65, 202);">submit</button>
+  <button mat-raised-button (click)="insertTodo()" style="margin-left: 30px; background-color: rgb(103, 65, 202); color: white; border-color: rgb(103, 65, 202); outline: none;">submit</button>
 <br><br>
 
 <div class="example-container mat-elevation-z8">
@@ -21,7 +21,7 @@
            <mat-header-cell *matHeaderCellDef> edit </mat-header-cell>
            <mat-cell *matCellDef="let element; let i = index;">
               <span class="mobile-label">edit</span>
-              <button mat-icon-button style="color: greenyellow;" (click)="edit(i)"><mat-icon>edit</mat-icon></button> 
+              <button mat-icon-button style="color: greenyellow; outline: none;" (click)="edit(i)"><mat-icon>edit</mat-icon></button> 
            </mat-cell>
         </ng-container>
 
@@ -29,7 +29,7 @@
            <mat-header-cell *matHeaderCellDef> delete </mat-header-cell>
            <mat-cell *matCellDef="let element; let i = index;">
               <span class="mobile-label">delete</span> 
-              <button mat-icon-button color="warn" (click)="delete(i)"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button style="outline: none;" color="warn" (click)="delete(i)"><mat-icon>delete</mat-icon></button>
            </mat-cell>
         </ng-container>
 

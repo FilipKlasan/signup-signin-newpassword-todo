@@ -29,12 +29,12 @@ export class DataService {
   }
 
   getAllTodos(obj): Observable<any>{
-    return this.http.get<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/getalltodos', obj)
+    return this.http.post<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/getalltodos', obj)
     .pipe(catchError(this.handleError));
   }
 
   deleteTodo(obj): Observable<any>{
-    return this.http.delete('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/deletetodo/', obj);
+    return this.http.post('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/deletetodo/', obj);
   }
 
 }
