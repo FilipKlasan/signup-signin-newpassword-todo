@@ -1,42 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-dark">  
-
-    <a class="navbar-brand" routerLink="/home"> Welcome </a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<mat-toolbar id="menu">
+  <button mat-icon-button id="menuButton" [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+  </button>
+        <mat-menu #menu>
+          <button mat-menu-item routerLink="/home" class="podDugme">
+            <mat-icon class="podDugmeIcon">home</mat-icon>
+            <span>Home</span>
+          </button>
+          <button mat-menu-item routerLink="/lockedPage" class="podDugme">
+            <mat-icon class="podDugmeIcon">home</mat-icon>
+            <span>Locked page</span>
+          </button>
+          <button *ngIf="!authService.loggedIn()" mat-menu-item class="podDugme" (click)="register()">
+            <mat-icon class="podDugmeIcon">account_circle</mat-icon>
+            <span>Sign up</span>
+          </button>
+          <button *ngIf="!authService.loggedIn()" mat-menu-item class="podDugme" (click)="logIn()">
+            <mat-icon class="podDugmeIcon">account_circle</mat-icon>
+            <span>Sign in</span>
+          </button>
+          <button *ngIf="authService.loggedIn()" mat-menu-item class="podDugme" (click)="authService.logOut()">
+            <mat-icon class="podDugmeIcon">account_circle</mat-icon>
+            <span>Sign out</span>
+          </button>
+        </mat-menu>
   
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home"> Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/lockedPage"> Locked page </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!authService.loggedIn()" routerLink="/registration"> 
-            <button class="btn btn-secondary" style="background-color: rgb(103, 65, 202); border-color: rgb(103, 65, 202); outline: none;"> Register </button> 
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!authService.loggedIn()" routerLink="/login">
-            <button class="btn btn-secondary" style="background-color: rgb(103, 65, 202); border-color: rgb(103, 65, 202); outline: none;"> Log in </button>
-          </a>
-        </li>
-        <li class="nav-item" *ngIf="authService.loggedIn()" (click)="authService.logOut()"> 
-            <button class="btn btn-secondary" style="background-color: rgb(103, 65, 202); border-color: rgb(103, 65, 202); outline: none;"> Log out </button> 
-        </li>
-      </ul>
-    </div>
-    
-  </nav>
+     <div id="levi">
+          <button mat-icon-button class="dugme" routerLink="/home"><mat-icon>home</mat-icon></button>
+          <button mat-button class="dugme" routerLink="/lockedPage">Locked page</button>
+     </div>
+     <div id="desni">
+          <button *ngIf="!authService.loggedIn()" mat-raised-button id="dugme1" routerLink="/registration">Sign up</button>
+          <button *ngIf="!authService.loggedIn()" mat-button class="dugme" style="border-radius: 5px;" routerLink="/login">Sign in</button>
+          <button *ngIf="authService.loggedIn()" mat-icon-button class="dugme" 
+          (click)="cmr()">
+               <mat-icon>account_circle</mat-icon>
+          </button>
+     </div>
+  </mat-toolbar>
   
-<router-outlet></router-outlet>
+  <!--
+      <mat-toolbar id="donji"></mat-toolbar>
+  -->
+  
+  <router-outlet></router-outlet>
 

@@ -2,13 +2,17 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/user');
-const db = "mongodb://filiptjofee:ficko123@ds257372.mlab.com:57372/filipevents";
+require('dotenv').config({path: __dirname + '/.env'});
+const db = process.env.MONGODBATLASCONNECTION;
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-require('dotenv').config({path: __dirname + '/.env'}); 
 const nodemailer = require('nodemailer');
 const exphbs = require('express-handlebars');
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 
 mongoose.connect(db, err => {
               if(err){
@@ -143,9 +147,8 @@ router.put('/newpassword', (req, res) => {
     let userData = req.body;
     User.findOne({email: userData.email})
         .then(user => {
-            let hashedPassword = bcrypt.hashSync(userData.password, 10);  
-            user.password = hashedPassword;
-            user.save()
+            let hashedPassword = bcrypt.hashSync(userData.password, 10);
+            User.updateOne( { email: userData.email }, { $set: { password: hashedPassword } } )
                 .then(user => {
                     console.log('Password successfully changed');
                     res.send({statusObj: 'Password successfully changed'});
@@ -162,43 +165,27 @@ router.put('/newpassword', (req, res) => {
 });
 
 
-router.post('/inserttodo', verifyToken, (req, res) => {
+router.put('/inserttodo', verifyToken, (req, res) => {
     let userData = req.body;
-    User.findOne({email: userData.email})
+    User.updateOne( { _id: req.user._id }, { $push: { todoList: userData.todo }})
         .then(user => {
-            user.todoList.push(userData.todo);
-            user.save()
-            .then(user => {
-                console.log('Todo has been saved');
-                res.send({statusObj: 'Todo has been saved'});
-            })
-            .catch(err => {
-                console.log('Error: ' + err);
-                res.status(401).status('Error occurred');
-            });  
+            console.log('Todo has been saved');
+            res.send({statusObj: 'Todo has been saved'});
         })
         .catch(err => {
             console.log('Error: ' + err);
             res.status(401).send('Error occurred');
         });
 });
-
 
 
 router.put('/edittodo', verifyToken, (req, res) => {
     let userData = req.body;
-    User.findOne({email: userData.email})
+    let element = `todoList.${userData.index}`;
+    User.updateOne( { _id: req.user._id }, { $set: { [`${element}`]: userData.todo }})
         .then(user => {
-            user.todoList = userData.todoList;
-            user.save()
-                .then(user => {
-                    console.log('Todo has been edited');
-                    res.send({statusObj: 'Todo has been edited'});
-                })
-                .catch(err => {
-                     console.log('Error: ' + err);
-                     res.status(401).status('Error occurred');
-                });  
+            console.log('Todo has been edited');
+            res.send({statusObj: 'Todo has been edited'});
         })
         .catch(err => {
             console.log('Error: ' + err);
@@ -207,9 +194,8 @@ router.put('/edittodo', verifyToken, (req, res) => {
 });
 
 
-router.post('/getalltodos', verifyToken, (req, res) => {
-    let userData = req.body;
-    User.findOne({email: userData.email})
+router.get('/getalltodos', verifyToken, (req, res) => {
+    User.findOne({ _id: req.user._id })
         .then(user => {
            let obj = {
                todoList:[]
@@ -218,16 +204,7 @@ router.post('/getalltodos', verifyToken, (req, res) => {
                res.send({statusObj: 'Todo list is empty'})
            }
            else{
-             let index = 0;
-             user.todoList.forEach(todo => { 
-                let tempObj = {
-                    id: index + 1,
-                    todo: todo
-                }
-                obj.todoList.push(tempObj);
-                index++;
-             });
-             res.send({obj});
+               res.send({obj: user.todoList});
            }
         })
         .catch(err => {
@@ -238,19 +215,10 @@ router.post('/getalltodos', verifyToken, (req, res) => {
 
 
 router.post('/deletetodo', verifyToken, (req, res) => {
-    let userData = req.body;
-    User.findOne({email: userData.email})
+    User.updateOne( { _id: req.user._id }, { $pull: { todoList: { _id: req.body._id } } } )
         .then(user => {
-            user.todoList = userData.todoList;
-            user.save()
-                .then(user => {
-                    console.log('Todo has been deleted');
-                    res.send({statusObj: 'Todo has been deleted'});
-                })
-                .catch(err => {
-                     console.log('Error: ' + err);
-                     res.status(401).status('Error occurred');
-                });  
+            console.log('Todo has been deleted');
+            res.send({statusObj: 'Todo has been deleted'});
         })
         .catch(err => {
             console.log('Error: ' + err);
@@ -271,6 +239,7 @@ function verifyToken(req, res, next) {
     if(!payload){
         return res.status(401).send('Unauthorized request');
     }
+    req.user = payload;
     next();
 }
 

@@ -31,7 +31,6 @@ export class AuthService {
 
   logOut(){
     localStorage.removeItem('fzx');
-    localStorage.removeItem('email');
     this.router.navigate(['/home']);
   }
   
@@ -49,6 +48,7 @@ export class AuthService {
     return this.http.post<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/emailandusernameverification', obj)
     .pipe(catchError(this.handleError));
   }
+
   emailVerificationNewPassword(obj): Observable<any>{
     return this.http.post<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/emailverificationnewpassword', obj)
     .pipe(catchError(this.handleError));

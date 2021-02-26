@@ -7,9 +7,9 @@
 <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"  style="background-color:rgb(58, 58, 58);"> 
 
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="_id">
            <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-           <mat-cell *matCellDef="let element"> <span class="mobile-label">ID:</span> {{element.id}} </mat-cell>
+           <mat-cell *matCellDef="let element"> <span class="mobile-label">_id:</span> {{element._id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="todo">
@@ -29,7 +29,7 @@
            <mat-header-cell *matHeaderCellDef> delete </mat-header-cell>
            <mat-cell *matCellDef="let element; let i = index;">
               <span class="mobile-label">delete</span> 
-              <button mat-icon-button style="outline: none;" color="warn" (click)="delete(i)"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button style="outline: none;" color="warn" (click)="delete(i, element)"><mat-icon>delete</mat-icon></button>
            </mat-cell>
         </ng-container>
 

@@ -9,5 +9,4 @@ const userSchema = new Schema({
     todoList: [String]
 });
 
-
-module.exports = mongoose.model('User', userSchema, 'users1');
+module.exports = User = mongoose.model('kolekcija', userSchema);

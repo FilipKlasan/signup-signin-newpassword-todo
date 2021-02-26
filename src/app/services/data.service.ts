@@ -19,7 +19,7 @@ export class DataService {
   }  
 
   insertTodo(obj): Observable<any>{
-    return this.http.post<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/inserttodo', obj)
+    return this.http.put<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/inserttodo', obj)
     .pipe(catchError(this.handleError));
   }
   
@@ -28,13 +28,14 @@ export class DataService {
     .pipe(catchError(this.handleError));
   }
 
-  getAllTodos(obj): Observable<any>{
-    return this.http.post<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/getalltodos', obj)
+  getAllTodos(): Observable<any>{
+    return this.http.get<any>('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/getalltodos')
     .pipe(catchError(this.handleError));
   }
 
   deleteTodo(obj): Observable<any>{
-    return this.http.post('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/deletetodo/', obj);
+    return this.http.put('http://' + HOST_PORT.HOST + ':' + HOST_PORT.PORT + '/api/deletetodo', obj)
+    .pipe(catchError(this.handleError));
   }
 
 }

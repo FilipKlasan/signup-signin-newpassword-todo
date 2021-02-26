@@ -39,9 +39,8 @@ export class LogInComponent {
                this.validationBool = false;
             }
             else{ 
-              localStorage.setItem('fzx', res.obj.token);
-              localStorage.setItem('email', res.obj.userEmail);
-              this.router.navigate(['/lockedPage']);
+               localStorage.setItem('fzx', res.obj.token);
+               this.router.navigate(['/lockedPage']);
             }
       }, 
       err => {

@@ -4,12 +4,12 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DataService } from '../../services/data.service';
 
 
-export interface todo{
-   id: number;
+interface todo {
+   _id: number;
    todo: string;
 }
 
-export interface EditDialogData{
+interface EditDialogData {
    todo: string;
 }
 
@@ -19,26 +19,23 @@ export interface EditDialogData{
   styleUrls: ['./locked-page.component.css']
 })
 export class LockedPageComponent {
-   todo: string;
-   todoList: todo[] = [];
-   tempArr = [];
-   columnNames: string[] = ['id', 'todo', 'edit', 'delete'];
-   dataSource = new MatTableDataSource();
-   userEmail: string;
-   
 
+  todo: string;
+  todoList: todo[] = [];
+  columnNames: string[] = ['id', 'todo', 'edit', 'delete'];
+  dataSource = new MatTableDataSource();
+  userEmail: string;
+   
   constructor(private dataService: DataService, 
               private dialog: MatDialog) {
-       let obj = {
-           email: localStorage.getItem('email')
-       };
-       this.dataService.getAllTodos(obj).subscribe(res => {
-          if(res.statusObj == 'Todo list is empty'){
+
+       this.dataService.getAllTodos().subscribe(res => {
+          if(res.statusObj == 'Todo list is empty') {
               console.log('Todo list is empty');
               this.dataSource.data = this.todoList;
           }
           else{
-              this.todoList = res.obj.todoList;
+              this.todoList = res.obj;
               this.dataSource.data = this.todoList;
           }
      }, 
@@ -48,17 +45,13 @@ export class LockedPageComponent {
   }
    
   insertTodo(){
-     this.tempArr = this.todoList;
-     let ind = this.tempArr.length + 1;
      let obj = {
-         id: ind,
+         _id: new Date().getTime(),
          todo: this.todo
      }
-     this.tempArr.push(obj);
-     this.todoList = this.tempArr;
+     this.todoList.push(obj);
      this.dataSource.data = this.todoList;
      let objToSend = {
-        email: localStorage.getItem('email'),
         todo: this.todo
      }
      this.dataService.insertTodo(objToSend).subscribe(res => {
@@ -76,13 +69,9 @@ export class LockedPageComponent {
        });
        dialogRef.afterClosed().subscribe(res => {
            this.todoList[i].todo = res.todo;
-           let todoListToSend = [];
-           for(let i = 0; i < this.todoList.length; i++) {
-               todoListToSend.push(this.todoList[i].todo);
-           }
-           let obj = { 
-               email: localStorage.getItem('email'),
-               todoList: todoListToSend
+           let obj = {
+               index: i,
+               todo: this.todoList[i].todo
            }
            this.dataService.editTodo(obj).subscribe(res => {
                console.log('Todo has been edited');
@@ -96,7 +85,7 @@ export class LockedPageComponent {
        });
   }
 
-  delete(i: number){
+  delete(i: number, element){
       let dialogSettings = {
          width: '',
          height: '',
@@ -104,28 +93,19 @@ export class LockedPageComponent {
       };
 
       let dialogRef = this.dialog.open(DeleteDialogComponent, dialogSettings);
-      dialogRef.afterClosed().subscribe(res => { 
+      dialogRef.afterClosed().subscribe(res => {
           if(res == true){
             this.todoList.splice(i, 1);
-            for(let i = 0; i < this.todoList.length; i++) {
-                this.todoList[i].id = i + 1;
-            }
             this.dataSource.data = this.todoList;
-
-            let todoListToSend = [];
-            for(let i = 0; i < this.todoList.length; i++) {
-                todoListToSend.push(this.todoList[i].todo);
-            }
             let obj = {
-                email: localStorage.getItem('email'),
-                todoList: todoListToSend
+                _id: element._id
             }
             this.dataService.deleteTodo(obj).subscribe(resp => {
-                 console.log('Todo has been deleted');
-             },
-             err => {
-                 console.log(err);
-             }
+                console.log('Todo has been deleted');
+            },
+            err => {
+                console.log(err);
+            }
             ); 
           }
       });
