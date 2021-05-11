@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DataService } from '../../services/data.service';
@@ -18,7 +18,7 @@ interface EditDialogData {
   templateUrl: './locked-page.component.html',
   styleUrls: ['./locked-page.component.css']
 })
-export class LockedPageComponent {
+export class LockedPageComponent implements OnInit {
 
   todo: string;
   todoList: todo[] = [];
@@ -27,20 +27,21 @@ export class LockedPageComponent {
   userEmail: string;
    
   constructor(private dataService: DataService, 
-              private dialog: MatDialog) {
+              private dialog: MatDialog) {}
 
-       this.dataService.getAllTodos().subscribe(res => {
-          if(res.statusObj == 'Todo list is empty') {
-              console.log('Todo list is empty');
-              this.dataSource.data = this.todoList;
-          }
-          else{
-              this.todoList = res.obj;
-              this.dataSource.data = this.todoList;
-          }
-     }, 
-     err => {
-         console.log(err);
+  ngOnInit() {
+    this.dataService.getAllTodos().subscribe(res => {
+        if(res.statusObj == 'Todo list is empty') {
+            console.log('Todo list is empty');
+            this.dataSource.data = this.todoList;
+        }
+        else{
+            this.todoList = res.obj;
+            this.dataSource.data = this.todoList;
+        }
+    }, 
+    err => {
+       console.log(err);
     });
   }
    

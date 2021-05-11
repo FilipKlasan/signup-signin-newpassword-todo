@@ -3,14 +3,14 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-export interface user{
+interface user {
    email: string;
    username: string;
    password: string;
    todoList: string[];
 }
 
-export interface verificationCode{
+interface verificationCode {
   code: string;
 }
 

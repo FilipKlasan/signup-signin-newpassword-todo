@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
-export interface verificCode{
+interface verificCode {
   code: string;
 }
 
-export interface newPassword{
+interface newPassword {
   email: string;
   password: string;
 }
